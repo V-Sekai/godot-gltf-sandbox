@@ -20,7 +20,6 @@ func _import_animation(path: String, flags: int, bake_fps: int) -> Animation:
 
 
 func _import_scene(path: String, flags: int, bake_fps: int):
-	print("Importing Mozilla Hubs")
 	var f = File.new()
 	if f.open(path, File.READ) != OK:
 		return FAILED
