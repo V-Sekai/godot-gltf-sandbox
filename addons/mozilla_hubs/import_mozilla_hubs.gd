@@ -48,10 +48,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		push_error("Failed to parse JSON part of glTF file in " + str(path) + ":" + str(gltf_json_parsed_result.error_line) + ": " + gltf_json_parsed_result.error_string)
 		return ERR_FILE_UNRECOGNIZED
 	var gltf_json_parsed: Dictionary = gltf_json_parsed_result.get_data()
-#   TODO test if has mozilla hubs extension
-#	if not _add_vrm_nodes_to_skin(gltf_json_parsed):
-#		push_error("Failed to find required VRM keys in " + str(path))
-#		return ERR_FILE_UNRECOGNIZED
+
 	var json_utf8: PackedByteArray = gltf_json_parsed_result.stringify(gltf_json_parsed, "", true, true).to_utf8_buffer()
 
 	f = File.new()
@@ -69,6 +66,13 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	f.close()
 
 	var gstate : GLTFState = GLTFState.new()
+	
+#   TODO test if has mozilla hubs extension
+#	var gltf_json : Dictionary = gstate.json
+#	if not moz hub extension found:
+#		push_error("Failed to find required VRM keys in " + str(path))
+#		return ERR_FILE_UNRECOGNIZED
+
 	var gltf : PackedSceneGLTF = PackedSceneGLTF.new()
 	print(path);
 	var root_node : Node = gltf.import_gltf_scene(tmp_path, 0, 1000.0, gstate)
@@ -81,8 +85,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if (!ResourceLoader.exists(path + ".res")):
 			ResourceSaver.save(path + ".res", gstate)
 
-#	var gltf_json : Dictionary = gstate.json
-#	var vrm_extension : Dictionary = gltf_json["extensions"]["VRM"]
 
 	# Remove references
 	var packed_scene: PackedScene = PackedScene.new()
