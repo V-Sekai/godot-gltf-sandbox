@@ -72,6 +72,15 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 #		push_error("Is not from Mozilla Hubs. " + str(path))
 #		return ERR_FILE_UNRECOGNIZED
 
+	#Search at hubs.mozilla for content
+	## CC-BY authors
+	## Link back to hubs.mozilla.org
+	#Disable merging
+	#Disable optimization
+	# For each sound play
+	# For each collision convert
+	# For each animations playing
+
 	var gltf : PackedSceneGLTF = PackedSceneGLTF.new()
 	print(path);
 	var root_node : Node = gltf.import_gltf_scene(tmp_path, 0, 1000.0, gstate)
