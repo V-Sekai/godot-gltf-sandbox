@@ -70,7 +70,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 #   TODO test if has mozilla hubs extension
 #	var gltf_json : Dictionary = gstate.json
 #	if not moz hub extension found:
-#		push_error("Failed to find required VRM keys in " + str(path))
+#		push_error("Is not from Mozilla Hubs. " + str(path))
 #		return ERR_FILE_UNRECOGNIZED
 
 	var gltf : PackedSceneGLTF = PackedSceneGLTF.new()
