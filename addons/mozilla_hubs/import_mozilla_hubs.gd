@@ -4,11 +4,11 @@ extends EditorSceneImporter
 # Set this to true to save a .res file with all GLTF DOM state
 # This allows exploring all JSON structure and also Godot internal GLTFState
 # Very useful for debugging.
-const SAVE_DEBUG_GLTFSTATE_RES: bool = true
+const SAVE_DEBUG_GLTFSTATE_RES: bool = false
 
 
 func _get_extensions():
-	return ["glb"]
+	return ["mozhubs"]
 
 
 func _get_import_flags():
@@ -21,7 +21,7 @@ func _import_animation(path: String, flags: int, bake_fps: int) -> Animation:
 
 func _import_scene(path: String, flags: int, bake_fps: int):
 	var f = File.new()
-	if f.open(path, File.READ) != OK:
+	if f.open(path.get_basename() + ".glb", File.READ) != OK:
 		return FAILED
 
 	var magic = f.get_32()
@@ -92,7 +92,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	if SAVE_DEBUG_GLTFSTATE_RES:
 		if (!ResourceLoader.exists(path + ".res")):
 			ResourceSaver.save(path + ".res", gstate)
-
 
 	# Remove references
 	var packed_scene: PackedScene = PackedScene.new()

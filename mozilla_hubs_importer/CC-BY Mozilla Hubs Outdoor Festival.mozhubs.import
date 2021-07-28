@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://bh4rm0e0g1jf8"
-path="res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.glb-e0b6d02668c0243b7ccb8aea819fd5c0.scn"
+uid="uid://dd7mrgjn20v7o"
+path="res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-b0dffc8fbd89fe4c25936cec4ce46b7c.scn"
 
 [deps]
 
-source_file="res://mozilla_hubs_importer/CC-BY Mozilla Hubs Outdoor Festival.glb"
-dest_files=["res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.glb-e0b6d02668c0243b7ccb8aea819fd5c0.scn"]
+source_file="res://mozilla_hubs_importer/CC-BY Mozilla Hubs Outdoor Festival.mozhubs"
+dest_files=["res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-b0dffc8fbd89fe4c25936cec4ce46b7c.scn"]
 
 [params]
 
