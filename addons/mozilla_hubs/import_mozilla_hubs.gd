@@ -65,28 +65,34 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		for key in keys:
 			if key == "visible":
 				if hubs[key]["visible"] == false:
+					new.name = new_node.name
 					new_node.replace_by(new)
 					new.set_owner(root_node)
 			elif key == "nav-mesh":
+				new.name = new_node.name
 				new_node.replace_by(new)
 				new.set_owner(root_node)
 			elif key == "trimesh":
+				new.name = new_node.name
 				new_node.replace_by(new)
 				new.set_owner(root_node)
 			elif key == "directional-light":				
 				var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
+				new.name = new_node.name
 				var node_3d : Node3D = new_node
 				new_light_3d.transform = node_3d.transform
 				new_node.replace_by(new_light_3d)
 				new_light_3d.set_owner(root_node)
 				# TODO 2021-07-28 fire: unfinished
 			elif key == "spawn-point":
+				new.name = new_node.name
 				new_node.replace_by(new)
 				new.set_owner(root_node)
 			elif key == "audio-params":
 				pass
 			elif key == "audio":
 				var new_audio_3d = AudioStreamPlayer3D.new()
+				new_audio_3d.name = new_node.name
 				new_node.replace_by(new_audio_3d)
 				new_audio_3d.set_owner(root_node)
 			else:
