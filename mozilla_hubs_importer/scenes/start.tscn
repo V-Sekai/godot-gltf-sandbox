@@ -7,6 +7,6 @@
 script = null
 
 [node name="Player" parent="." instance=ExtResource( "2_erhn1" )]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.18823, 0.0677071)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 1.44086, -1.1572)
 
 [node name="CC-BY Mozilla Hubs Outdoor Festival" parent="." instance=ExtResource( "2_yb3oc" )]
