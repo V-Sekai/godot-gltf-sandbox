@@ -78,8 +78,8 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 				new.set_owner(root_node)
 			elif key == "directional-light":				
 				var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
-				new.name = new_node.name
-				new_light_3d.transform = new.transform
+				new_light_3d.name = new_node.name
+				new_light_3d.transform = new_node.transform
 				new_node.replace_by(new_light_3d)
 				new_light_3d.set_owner(root_node)
 				# TODO 2021-07-28 fire: unfinished
