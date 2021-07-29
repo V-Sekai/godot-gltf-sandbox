@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cq74fwf78y5x5"
+uid="uid://bco33rnjbrd60"
 path="res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-0a4bfecc2810c70bc50b96706a339ec8.scn"
 
 [deps]
@@ -27,4 +27,9 @@ animation/bake_reset_animation=false
 animation/fps=15
 import_script/path=""
 _subresources={
+"nodes": {
+"PATH:MESHES/outdoorFestival_01glb/Scene2/ground_plane": {
+"generate/physics": 1
+}
+}
 }
