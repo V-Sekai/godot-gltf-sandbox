@@ -45,11 +45,14 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		extended_nodes.push_back(curr["MOZ_hubs_components"])
 		var new_node_path : NodePath = root_node.get_path_to(gstate.get_scene_node(index))
 		var node_3d : Node3D = root_node.get_node(new_node_path)
+				
 		if curr.has("KHR_materials_unlit"):
 			for surface_i in node_3d.get_mesh().get_surface_count():
 				var mat : BaseMaterial3D = node_3d.get_mesh().surface_get_material(surface_i)
 				if mat:
-					mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+					mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED		
+		
+		var mesh_node = root_node.get_node(new_node_path)
 		
 		if not curr.has("MOZ_hubs_components"):
 			extended_nodes.push_back([])
@@ -63,7 +66,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			continue
 		
 		var keys : Array = hubs.keys()	
-			
+					
 		if keys.has("visible"):
 			if hubs["visible"]["visible"] == false:
 				node_3d.visible = false		
@@ -129,7 +132,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 #					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
 			continue
 		print(keys)
-	
+			
 	if SAVE_DEBUG_GLTFSTATE_RES:		
 		var extended = preload("res://addons/mozilla_hubs/node_resource.gd").new()
 		extended.nodes = extended_nodes		
@@ -140,6 +143,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	var packed_scene: PackedScene = PackedScene.new()
 	packed_scene.pack(root_node)
 	return packed_scene.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
+
 
 func import_animation_from_other_importer(path: String, flags: int, bake_fps: int):
 	return self._import_animation(path, flags, bake_fps)

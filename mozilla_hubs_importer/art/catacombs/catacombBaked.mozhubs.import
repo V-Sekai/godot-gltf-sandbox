@@ -1,0 +1,50 @@
+[remap]
+
+importer="scene"
+importer_version=1
+type="PackedScene"
+uid="uid://dymj3kmqd1vt1"
+path="res://.godot/imported/catacombBaked.mozhubs-7cb738a32efd5df5135b7eb690b57340.scn"
+
+[deps]
+
+source_file="res://mozilla_hubs_importer/art/catacombs/catacombBaked.mozhubs"
+dest_files=["res://.godot/imported/catacombBaked.mozhubs-7cb738a32efd5df5135b7eb690b57340.scn"]
+
+[params]
+
+nodes/root_type="Node3D"
+nodes/root_name="Scene Root"
+nodes/root_scale=1.0
+meshes/ensure_tangents=true
+meshes/generate_lods=true
+meshes/create_shadow_meshes=false
+meshes/light_baking=2
+meshes/lightmap_texel_size=0.1
+skins/use_named_skins=true
+animation/import=true
+animation/bake_reset_animation=true
+animation/fps=15
+import_script/path=""
+_subresources={
+"nodes": {
+"PATH:catacombglb/Scene/Props": {
+"generate/physics": 1
+},
+"PATH:catacombglb/Scene/RoomMesh000/Mesh_10_0": {
+"generate/physics": 1
+},
+"PATH:catacombglb/Scene/RoomMesh000/Mesh_10_1": {
+"generate/physics": 1
+},
+"PATH:catacombglb/Scene/RoomMesh000/Mesh_10_2": {
+"generate/physics": 1
+},
+"PATH:catacombglb/Scene/RoomMesh000/Mesh_10_3": {
+"generate/physics": 1
+},
+"PATH:catacombglb/Scene/RoomMesh000/Mesh_10_4": {
+"generate/physics": 1
+}
+}
+}
