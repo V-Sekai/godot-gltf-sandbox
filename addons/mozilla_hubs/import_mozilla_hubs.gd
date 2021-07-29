@@ -46,9 +46,11 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			continue
 		if curr.has("KHR_materials_unlit"):
 			var new_mesh_instance : MeshInstance3D = new_node
-			for surface_i in new_mesh_instance.get_mesh().get_surface_count():
-				var mat : BaseMaterial3D = new_mesh_instance.get_mesh().surface_get_material(surface_i)
-				mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			if new_mesh_instance.get_mesh():				
+				for surface_i in new_mesh_instance.get_mesh().get_surface_count():
+					var mat : BaseMaterial3D = new_mesh_instance.get_mesh().surface_get_material(surface_i)
+					if mat:
+						mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		
 		if not curr.has("MOZ_hubs_components"):
 			extended_nodes.push_back([])
@@ -59,8 +61,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			continue
 			
 		if hubs.is_empty():
-			continue;
-			
+			continue
 		
 		var keys = hubs.keys()
 		var new = Node3D.new()
@@ -103,14 +104,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 				
 		extended_nodes.push_back(curr["MOZ_hubs_components"])
 	
-	## CC-BY authors
-	## Link back to hubs.mozilla.org
-	#Disable merging
-	#Disable optimization
-	# For each sound play
-	# For each collision convert
-	# For each animations playing
-
 	if SAVE_DEBUG_GLTFSTATE_RES:		
 		var extended = preload("res://addons/mozilla_hubs/node_resource.gd").new()
 		extended.nodes = extended_nodes		
