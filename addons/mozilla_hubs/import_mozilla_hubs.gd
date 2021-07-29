@@ -4,7 +4,7 @@ extends EditorSceneImporter
 # Set this to true to save a .res file with all GLTF DOM state
 # This allows exploring all JSON structure and also Godot internal GLTFState
 # Very useful for debugging.
-const SAVE_DEBUG_GLTFSTATE_RES: bool = true
+const SAVE_DEBUG_GLTFSTATE_RES: bool = false
 
 
 func _get_extensions():
@@ -69,7 +69,8 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 					new_node.replace_by(new)
 					new.set_owner(root_node)
 			elif key == "nav-mesh":
-				new_node.queue_free()
+				for node_i in new_node.get_child_count():
+					new_node.get_child(node_i).queue_free()
 			elif key == "trimesh":
 				new.name = new_node.name
 				new_node.replace_by(new)
