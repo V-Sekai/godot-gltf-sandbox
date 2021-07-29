@@ -116,6 +116,11 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 					node_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
 				elif cast == true and receive == true:					
 					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
+			else:
+				var new_node_3d : Node3D = Node3D.new()
+				new_node_3d.name = node_3d.name
+				new_node_3d.transform = node_3d.transform
+				node_3d.replace_by(new_node_3d)									
 			continue
 		print(keys)
 	
