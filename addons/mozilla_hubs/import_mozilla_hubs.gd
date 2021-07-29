@@ -62,7 +62,12 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if hubs.is_empty():
 			continue
 		
-		var keys : Array = hubs.keys()		
+		var keys : Array = hubs.keys()	
+			
+		if keys.has("visible"):
+			if hubs["visible"]["visible"] == false:
+				node_3d.visible = false		
+		
 		if keys.has("nav-mesh"):	
 			var new_node_3d : Node3D = Node3D.new()
 			new_node_3d.name = node_3d.name
@@ -76,13 +81,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			new_node_3d.transform = node_3d.transform
 			node_3d.replace_by(new_node_3d)
 			continue
-			
-		if keys.has("visible"):
-			if hubs["visible"]["visible"] == false:
-				var new_node_3d : Node3D = Node3D.new()
-				new_node_3d.name = node_3d.name
-				new_node_3d.transform = node_3d.transform
-				node_3d.replace_by(new_node_3d)
 		
 		if keys.has("directional-light"):				
 			var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
@@ -105,21 +103,20 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			new_audio_3d.transform = node_3d.transform
 			node_3d.replace_by(new_audio_3d)
 			continue
-					
+				
 		if keys.has("shadow"):
-			var new_mesh_3d : MeshInstance3D = node_3d
-			if new_mesh_3d:
+			if node_3d is MeshInstance3D:
 				var cast : bool = hubs["shadow"]["cast"]				
 				var receive : bool = hubs["shadow"]["receive"]
 				if cast == false and receive == false:
-					new_mesh_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
+					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
 				elif cast == true and receive == false:					
-					new_mesh_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
+					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
 				elif cast == false and receive == true:					
-					new_mesh_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
+					node_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
 				elif cast == true and receive == true:					
-					new_mesh_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
-				continue
+					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
+			continue
 		print(keys)
 	
 	if SAVE_DEBUG_GLTFSTATE_RES:		
