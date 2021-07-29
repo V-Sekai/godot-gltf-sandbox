@@ -45,21 +45,33 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			extended_nodes.push_back([])
 			continue
 		
-		for key in curr["MOZ_hubs_components"].keys():
-			var elem = curr["MOZ_hubs_components"][key]
-			var new_node = gstate.get_scene_node(index)
+		var hubs = curr["MOZ_hubs_components"]		
+		if not hubs is Dictionary:
+			continue
+			
+		if hubs.is_empty():
+			continue;
+			
+		var new_node = gstate.get_scene_node(index)
+		
+		var keys = hubs.keys()
+		var new = Node.new()
+		for key in keys:
 			if key == "visible":
-				if not elem["visible"]:
-					new_node.visible = false
-					break
-			if key == "nav-mesh":
-				new_node.queue_free()
-			if key == "trimesh":
-				new_node.queue_free()
+				if hubs[key]["visible"] == false:
+					new_node.replace_by(new)
+					new.set_owner(root_node)
+			elif key == "nav-mesh":
+				new_node.replace_by(new)
+				new.set_owner(root_node)
+			elif key == "trimesh":
+				new_node.replace_by(new)
+				new.set_owner(root_node)
 			elif key == "spawn-point":
-				new_node.queue_free()
+				new_node.replace_by(new)
+				new.set_owner(root_node)
 			else:
-				print(elem)
+				print(hubs[key])
 				
 		extended_nodes.push_back(curr["MOZ_hubs_components"])
 	
