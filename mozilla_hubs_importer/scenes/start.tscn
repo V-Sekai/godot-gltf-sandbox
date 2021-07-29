@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://btaala60nwxdl"]
+
+[ext_resource type="PackedScene" uid="uid://cq74fwf78y5x5" path="res://mozilla_hubs_importer/art/festival/CC-BY Mozilla Hubs Outdoor Festival.mozhubs" id="1_c8xbe"]
+[ext_resource type="PackedScene" path="res://addons/3d_platform_controller/scenes/player.tscn" id="2_erhn1"]
+
+[node name="Node3D" type="Node3D"]
+script = null
+
+[node name="CC-BY Mozilla Hubs Outdoor Festival" parent="." instance=ExtResource( "1_c8xbe" )]
+
+[node name="Player" parent="." instance=ExtResource( "2_erhn1" )]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0.148768, 0)

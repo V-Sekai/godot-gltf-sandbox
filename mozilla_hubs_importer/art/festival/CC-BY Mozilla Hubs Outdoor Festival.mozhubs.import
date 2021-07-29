@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://cq74fwf78y5x5"
-path="res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-b0dffc8fbd89fe4c25936cec4ce46b7c.scn"
+path="res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-0a4bfecc2810c70bc50b96706a339ec8.scn"
 
 [deps]
 
-source_file="res://mozilla_hubs_importer/CC-BY Mozilla Hubs Outdoor Festival.mozhubs"
-dest_files=["res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-b0dffc8fbd89fe4c25936cec4ce46b7c.scn"]
+source_file="res://mozilla_hubs_importer/art/festival/CC-BY Mozilla Hubs Outdoor Festival.mozhubs"
+dest_files=["res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.mozhubs-0a4bfecc2810c70bc50b96706a339ec8.scn"]
 
 [params]
 

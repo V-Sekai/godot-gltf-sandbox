@@ -8,10 +8,20 @@
 
 config_version=4
 
+_global_script_classes=[{
+"base": "Camera3D",
+"class": &"InterpolatedCamera3D",
+"language": &"GDScript",
+"path": "res://addons/interpolated_camera_3d/interpolated_camera_3d.gd"
+}]
+_global_script_class_icons={
+"InterpolatedCamera3D": "res://addons/interpolated_camera_3d/interpolated_camera_3d.svg"
+}
+
 [application]
 
 config/name="Mozilla Hubs Importer"
-run/main_scene="res://mozilla_hubs_importer/CC-BY Mozilla Hubs Outdoor Festival.mozhubs"
+run/main_scene="res://mozilla_hubs_importer/scenes/start.tscn"
 config/icon="res://icon.png"
 enabled=PackedStringArray("vrm")
 
