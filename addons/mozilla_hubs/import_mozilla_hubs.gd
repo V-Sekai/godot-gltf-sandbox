@@ -85,6 +85,9 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 				new.name = new_node.name
 				new_node.replace_by(new)
 				new.set_owner(root_node)
+			elif key == "shadow":
+				new_node.free()
+				break
 			elif key == "audio-params":
 				pass
 			elif key == "audio":
