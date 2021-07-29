@@ -36,6 +36,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	var extended_nodes : Array = []
 	for node in nodes:
 		var curr : Dictionary = {}
+		var index = extended_nodes.size()
 		if not node.has("extensions"):
 			extended_nodes.push_back([])
 			continue
@@ -43,7 +44,24 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if not curr.has("MOZ_hubs_components"):
 			extended_nodes.push_back([])
 			continue
-		extended_nodes.push_back(curr)
+		
+		for key in curr["MOZ_hubs_components"].keys():
+			var elem = curr["MOZ_hubs_components"][key]
+			var new_node = gstate.get_scene_node(index)
+			if key == "visible":
+				if not elem["visible"]:
+					new_node.visible = false
+					break
+			if key == "nav-mesh":
+				new_node.queue_free()
+			if key == "trimesh":
+				new_node.queue_free()
+			elif key == "spawn-point":
+				new_node.queue_free()
+			else:
+				print(elem)
+				
+		extended_nodes.push_back(curr["MOZ_hubs_components"])
 	
 	## CC-BY authors
 	## Link back to hubs.mozilla.org
@@ -56,8 +74,8 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	if SAVE_DEBUG_GLTFSTATE_RES:		
 		var extended = preload("res://addons/mozilla_hubs/node_resource.gd").new()
 		extended.nodes = extended_nodes		
-		ResourceSaver.save(path + ".mozhubs.tres", extended)
-		ResourceSaver.save(path + ".res", gstate)
+		ResourceSaver.save(path.get_basename() + ".debug.tres", extended)
+		ResourceSaver.save(path.get_basename() + ".res", gstate)
 
 	# Remove references
 	var packed_scene: PackedScene = PackedScene.new()
