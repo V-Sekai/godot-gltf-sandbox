@@ -64,10 +64,10 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		var new = Node3D.new()
 		for key in keys:
 			if key == "visible":
-				if hubs[key]["visible"] == false:
+				if hubs[key]["visible"] == false and new_node:
 					new_node.free()
 					break
-			elif key == "nav-mesh":
+			elif key == "nav-mesh" and new_node:
 				new_node.free()
 				break
 			elif key == "trimesh":
@@ -85,7 +85,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 				new.name = new_node.name
 				new_node.replace_by(new)
 				new.set_owner(root_node)
-			elif key == "shadow":
+			elif key == "shadow" and new_node:
 				new_node.free()
 				break
 			elif key == "audio-params":
