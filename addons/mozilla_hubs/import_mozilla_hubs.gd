@@ -71,8 +71,9 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 					new_node.free()
 					break
 			elif key == "shadow" and new_node and new_node.get_parent():
-				new_node.get_parent().remove_child(new_node)
-				new_node.free()
+				new.name = new_node.name
+				new_node.replace_by(new)
+				new.set_owner(root_node)
 				break
 			elif key == "nav-mesh" and new_node and new_node.get_parent():
 				new_node.get_parent().remove_child(new_node)
