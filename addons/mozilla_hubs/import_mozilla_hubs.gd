@@ -45,10 +45,9 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if not new_node:
 			continue
 		if curr.has("KHR_materials_unlit"):
-			var new_mesh_instance : MeshInstance3D = new_node
-			if new_mesh_instance.get_mesh():				
-				for surface_i in new_mesh_instance.get_mesh().get_surface_count():
-					var mat : BaseMaterial3D = new_mesh_instance.get_mesh().surface_get_material(surface_i)
+			if new_node.get_mesh():				
+				for surface_i in new_node.get_mesh().get_surface_count():
+					var mat : BaseMaterial3D = new_node.get_mesh().surface_get_material(surface_i)
 					if mat:
 						mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		
@@ -67,10 +66,16 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		var new = Node3D.new()
 		for key in keys:
 			if key == "visible":
-				if hubs[key]["visible"] == false and new_node:
+				if hubs[key]["visible"] == false and new_node and new_node.get_parent():
+					new_node.get_parent().remove_child(new_node)
 					new_node.free()
 					break
-			elif key == "nav-mesh" and new_node:
+			elif key == "shadow" and new_node and new_node.get_parent():
+				new_node.get_parent().remove_child(new_node)
+				new_node.free()
+				break
+			elif key == "nav-mesh" and new_node and new_node.get_parent():
+				new_node.get_parent().remove_child(new_node)
 				new_node.free()
 				break
 			elif key == "trimesh":
@@ -88,9 +93,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 				new.name = new_node.name
 				new_node.replace_by(new)
 				new.set_owner(root_node)
-			elif key == "shadow" and new_node:
-				new_node.free()
-				break
 			elif key == "audio-params":
 				pass
 			elif key == "audio":
