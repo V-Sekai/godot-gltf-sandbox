@@ -98,9 +98,14 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			continue
 				
 		if keys.has("audio"):
+			var src : String = hubs["audio"]["src"]					
 			var new_audio_3d = AudioStreamPlayer3D.new()
 			new_audio_3d.name = node_3d.name
-			new_audio_3d.transform = node_3d.transform
+			new_audio_3d.transform = node_3d.transform			
+			if not src.is_empty():
+				var path_stream = path.get_base_dir() + "/" + src.get_file()
+				print(path_stream)
+				new_audio_3d.stream = load(path_stream)
 			node_3d.replace_by(new_audio_3d)
 			continue
 				
@@ -129,7 +134,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	var packed_scene: PackedScene = PackedScene.new()
 	packed_scene.pack(root_node)
 	return packed_scene.instantiate(PackedScene.GEN_EDIT_STATE_INSTANCE)
-
 
 func import_animation_from_other_importer(path: String, flags: int, bake_fps: int):
 	return self._import_animation(path, flags, bake_fps)

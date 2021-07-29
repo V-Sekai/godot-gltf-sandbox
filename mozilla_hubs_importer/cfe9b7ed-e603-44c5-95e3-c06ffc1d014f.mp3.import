@@ -1,0 +1,16 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://d0talve1pruiq"
+path="res://.godot/imported/cfe9b7ed-e603-44c5-95e3-c06ffc1d014f.mp3-ae5c37816f51ef470f82a78a0e74e345.mp3str"
+
+[deps]
+
+source_file="res://mozilla_hubs_importer/cfe9b7ed-e603-44c5-95e3-c06ffc1d014f.mp3"
+dest_files=["res://.godot/imported/cfe9b7ed-e603-44c5-95e3-c06ffc1d014f.mp3-ae5c37816f51ef470f82a78a0e74e345.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0
