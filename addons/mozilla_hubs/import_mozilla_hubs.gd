@@ -66,23 +66,9 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 
 	var gstate : GLTFState = GLTFState.new()
 	
-#   TODO test if has mozilla hubs extension
-#	var gltf_json : Dictionary = gstate.json
-#	if not moz hub extension found:
-#		push_error("Is not from Mozilla Hubs. " + str(path))
-#		return ERR_FILE_UNRECOGNIZED
-
-	#Search at hubs.mozilla for content
-	## CC-BY authors
-	## Link back to hubs.mozilla.org
-	#Disable merging
-	#Disable optimization
-	# For each sound play
-	# For each collision convert
-	# For each animations playing
+	var extended_nodes : Array = _process_extended_moz_hubs_nodes(gstate)
 
 	var gltf : PackedSceneGLTF = PackedSceneGLTF.new()
-	print(path);
 	var root_node : Node = gltf.import_gltf_scene(tmp_path, 0, 1000.0, gstate)
 	root_node.name = path.get_basename().get_file()
 	var d: Directory = Directory.new()
@@ -106,3 +92,27 @@ func import_animation_from_other_importer(path: String, flags: int, bake_fps: in
 func import_scene_from_other_importer(path: String, flags: int, bake_fps: int):
 	return self._import_scene(path, flags, bake_fps)
 
+func _process_extended_moz_hubs_nodes(state: GLTFState):
+	if not state.json.has("nodes"):
+		return []
+	
+	var nodes = state.json.get("nodes")
+	
+	for node in nodes:
+		var curr : Dictionary = {}
+		if node.has("extensions"):
+			curr = node.get("extensions")
+			print(curr)
+		else:
+			continue	
+		if curr.has("MOZ_hubs_components"):
+			print(curr.get("MOZ_hubs_components"))
+		else:
+			continue
+	## CC-BY authors
+	## Link back to hubs.mozilla.org
+	#Disable merging
+	#Disable optimization
+	# For each sound play
+	# For each collision convert
+	# For each animations playing
