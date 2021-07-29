@@ -105,22 +105,17 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			continue
 				
 		if keys.has("shadow"):
-			if node_3d is MeshInstance3D:
-				var cast : bool = hubs["shadow"]["cast"]				
-				var receive : bool = hubs["shadow"]["receive"]
-				if cast == false and receive == false:
-					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
-				elif cast == true and receive == false:					
-					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
-				elif cast == false and receive == true:					
-					node_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
-				elif cast == true and receive == true:					
-					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
-			else:
-				var new_node_3d : Node3D = Node3D.new()
-				new_node_3d.name = node_3d.name
-				new_node_3d.transform = node_3d.transform
-				node_3d.replace_by(new_node_3d)									
+#			if node_3d is MeshInstance3D:
+#				var cast : bool = hubs["shadow"]["cast"]				
+#				var receive : bool = hubs["shadow"]["receive"]
+#				if cast == false and receive == false:
+#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
+#				elif cast == true and receive == false:					
+#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
+#				elif cast == false and receive == true:					
+#					node_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
+#				elif cast == true and receive == true:					
+#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
 			continue
 		print(keys)
 	
