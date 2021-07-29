@@ -37,19 +37,19 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 	for node in nodes:
 		var curr : Dictionary = {}
 		var index = extended_nodes.size()
+
 		if not node.has("extensions"):
 			extended_nodes.push_back([])
 			continue
 		curr = node.get("extensions")		
-		var new_node = gstate.get_scene_node(index)
-		if not new_node:
-			continue
+		extended_nodes.push_back(curr["MOZ_hubs_components"])
+		var new_node_path : NodePath = root_node.get_path_to(gstate.get_scene_node(index))
+		var node_3d : Node3D = root_node.get_node(new_node_path)
 		if curr.has("KHR_materials_unlit"):
-			if new_node.get_mesh():				
-				for surface_i in new_node.get_mesh().get_surface_count():
-					var mat : BaseMaterial3D = new_node.get_mesh().surface_get_material(surface_i)
-					if mat:
-						mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+			for surface_i in node_3d.get_mesh().get_surface_count():
+				var mat : BaseMaterial3D = node_3d.get_mesh().surface_get_material(surface_i)
+				if mat:
+					mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 		
 		if not curr.has("MOZ_hubs_components"):
 			extended_nodes.push_back([])
@@ -62,43 +62,65 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if hubs.is_empty():
 			continue
 		
-		var keys = hubs.keys()
-		var new = Node3D.new()
-		new.name = new_node.name
-		for key in keys:
-			if key == "visible":
-				if hubs[key]["visible"] == false:
-					new_node.visible = false
-			elif key == "directional-light":				
-				var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
-				new_light_3d.name = new_node.name
-				new_light_3d.transform = new_node.transform
-				new_node.replace_by(new_light_3d)			
-				new_node.free()
-				new_node = new_light_3d
-				# TODO 2021-07-28 fire: unfinished
-			elif key == "shadow":
-				new_node.queue_free()
-			elif key == "nav-mesh":
-				new_node.queue_free()
-			elif key == "trimesh":
-				new_node.replace_by(new)
-				new_node.free()
-				new_node = new
-			elif key == "spawn-point":
-				new_node.queue_free()
-			elif key == "audio-params":
-				pass
-			elif key == "audio":
-				var new_audio_3d = AudioStreamPlayer3D.new()
-				new_audio_3d.name = new_node.name
-				new_node.replace_by(new_audio_3d)
-				new_node.free()
-				new_node = new_audio_3d
-			else:
-				"%s: %s".format([key, hubs[key]])
+		var keys : Array = hubs.keys()		
+		if keys.has("nav-mesh"):	
+			var new_node_3d : Node3D = Node3D.new()
+			new_node_3d.name = node_3d.name
+			new_node_3d.transform = node_3d.transform
+			node_3d.replace_by(new_node_3d)
+			continue
+		
+		if keys.has("trimesh"):			
+			var new_node_3d : Node3D = Node3D.new()
+			new_node_3d.name = node_3d.name
+			new_node_3d.transform = node_3d.transform
+			node_3d.replace_by(new_node_3d)
+			continue
+			
+		if keys.has("visible"):
+			if hubs["visible"]["visible"] == false:
+				var new_node_3d : Node3D = Node3D.new()
+				new_node_3d.name = node_3d.name
+				new_node_3d.transform = node_3d.transform
+				node_3d.replace_by(new_node_3d)
+		
+		if keys.has("directional-light"):				
+			var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
+			new_light_3d.name = node_3d.name
+			new_light_3d.transform = node_3d.transform
+			node_3d.replace_by(new_light_3d)
+			# TODO 2021-07-28 fire: unfinished
+			continue
+		
+		if keys.has("spawn-point"):		
+			var new_node_3d : Node3D = Node3D.new()
+			new_node_3d.name = node_3d.name
+			new_node_3d.transform = node_3d.transform
+			node_3d.replace_by(new_node_3d)
+			continue
 				
-		extended_nodes.push_back(curr["MOZ_hubs_components"])
+		if keys.has("audio"):
+			var new_audio_3d = AudioStreamPlayer3D.new()
+			new_audio_3d.name = node_3d.name
+			new_audio_3d.transform = node_3d.transform
+			node_3d.replace_by(new_audio_3d)
+			continue
+					
+		if keys.has("shadow"):
+			var new_mesh_3d : MeshInstance3D = node_3d
+			if new_mesh_3d:
+				var cast : bool = hubs["shadow"]["cast"]				
+				var receive : bool = hubs["shadow"]["receive"]
+				if cast == false and receive == false:
+					new_mesh_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
+				elif cast == true and receive == false:					
+					new_mesh_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
+				elif cast == false and receive == true:					
+					new_mesh_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
+				elif cast == true and receive == true:					
+					new_mesh_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
+				continue
+		print(keys)
 	
 	if SAVE_DEBUG_GLTFSTATE_RES:		
 		var extended = preload("res://addons/mozilla_hubs/node_resource.gd").new()
