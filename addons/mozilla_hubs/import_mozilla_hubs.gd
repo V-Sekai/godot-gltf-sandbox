@@ -61,7 +61,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			
 		
 		var keys = hubs.keys()
-		var new = Node.new()
+		var new = Node3D.new()
 		for key in keys:
 			if key == "visible":
 				if hubs[key]["visible"] == false:
@@ -69,9 +69,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 					new_node.replace_by(new)
 					new.set_owner(root_node)
 			elif key == "nav-mesh":
-				new.name = new_node.name
-				new_node.replace_by(new)
-				new.set_owner(root_node)
+				new_node.queue_free()
 			elif key == "trimesh":
 				new.name = new_node.name
 				new_node.replace_by(new)
@@ -79,8 +77,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			elif key == "directional-light":				
 				var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
 				new.name = new_node.name
-				var node_3d : Node3D = new_node
-				new_light_3d.transform = node_3d.transform
+				new_light_3d.transform = new.transform
 				new_node.replace_by(new_light_3d)
 				new_light_3d.set_owner(root_node)
 				# TODO 2021-07-28 fire: unfinished
