@@ -40,7 +40,14 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if not node.has("extensions"):
 			extended_nodes.push_back([])
 			continue
-		curr = node.get("extensions")
+		curr = node.get("extensions")		
+		var new_node = gstate.get_scene_node(index)
+		if curr.has("KHR_materials_unlit"):
+			var new_mesh_instance : MeshInstance3D = new_node
+			for surface_i in new_mesh_instance.get_mesh().get_surface_count():
+				var mat : BaseMaterial3D = new_mesh_instance.get_mesh().surface_get_material(surface_i)
+				mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+		
 		if not curr.has("MOZ_hubs_components"):
 			extended_nodes.push_back([])
 			continue
@@ -52,7 +59,6 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		if hubs.is_empty():
 			continue;
 			
-		var new_node = gstate.get_scene_node(index)
 		
 		var keys = hubs.keys()
 		var new = Node.new()
@@ -67,10 +73,24 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			elif key == "trimesh":
 				new_node.replace_by(new)
 				new.set_owner(root_node)
+			elif key == "directional-light":				
+				var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
+				var node_3d : Node3D = new_node
+				new_light_3d.transform = node_3d.transform
+				new_node.replace_by(new_light_3d)
+				new_light_3d.set_owner(root_node)
+				# TODO 2021-07-28 fire: unfinished
 			elif key == "spawn-point":
 				new_node.replace_by(new)
 				new.set_owner(root_node)
+			elif key == "audio-params":
+				pass
+			elif key == "audio":
+				var new_audio_3d = AudioStreamPlayer3D.new()
+				new_node.replace_by(new_audio_3d)
+				new_audio_3d.set_owner(root_node)
 			else:
+				print(key + ": ")
 				print(hubs[key])
 				
 		extended_nodes.push_back(curr["MOZ_hubs_components"])
