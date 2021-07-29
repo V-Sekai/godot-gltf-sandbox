@@ -106,8 +106,8 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 				var path_stream = path.get_base_dir() + "/" + src.get_file()
 				print(path_stream)
 				new_audio_3d.stream = load(path_stream)
-				
 			var auto_play : bool = hubs["audio"]["autoPlay"]
+			new_audio_3d.playing = auto_play
 			new_audio_3d.autoplay = auto_play
 			if hubs["audio"].has("volume"):
 				var volume : float = hubs["audio"]["volume"]
