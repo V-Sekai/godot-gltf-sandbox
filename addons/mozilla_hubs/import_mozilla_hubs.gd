@@ -65,12 +65,11 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		for key in keys:
 			if key == "visible":
 				if hubs[key]["visible"] == false:
-					new.name = new_node.name
-					new_node.replace_by(new)
-					new.set_owner(root_node)
+					new_node.free()
+					break
 			elif key == "nav-mesh":
-				for node_i in new_node.get_child_count():
-					new_node.get_child(node_i).queue_free()
+				new_node.free()
+				break
 			elif key == "trimesh":
 				new.name = new_node.name
 				new_node.replace_by(new)
