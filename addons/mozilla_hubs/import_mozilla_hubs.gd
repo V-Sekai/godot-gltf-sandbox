@@ -42,6 +42,8 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			continue
 		curr = node.get("extensions")		
 		var new_node = gstate.get_scene_node(index)
+		if not new_node:
+			continue
 		if curr.has("KHR_materials_unlit"):
 			var new_mesh_instance : MeshInstance3D = new_node
 			for surface_i in new_mesh_instance.get_mesh().get_surface_count():
