@@ -64,46 +64,39 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 		
 		var keys = hubs.keys()
 		var new = Node3D.new()
+		new.name = new_node.name
 		for key in keys:
 			if key == "visible":
-				if hubs[key]["visible"] == false and new_node and new_node.get_parent():
-					new_node.get_parent().remove_child(new_node)
-					new_node.free()
-					break
-			elif key == "shadow" and new_node and new_node.get_parent():
-				new.name = new_node.name
-				new_node.replace_by(new)
-				new.set_owner(root_node)
-				break
-			elif key == "nav-mesh" and new_node and new_node.get_parent():
-				new_node.get_parent().remove_child(new_node)
-				new_node.free()
-				break
-			elif key == "trimesh":
-				new.name = new_node.name
-				new_node.replace_by(new)
-				new.set_owner(root_node)
+				if hubs[key]["visible"] == false:
+					new_node.visible = false
 			elif key == "directional-light":				
 				var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
 				new_light_3d.name = new_node.name
 				new_light_3d.transform = new_node.transform
-				new_node.replace_by(new_light_3d)
-				new_light_3d.set_owner(root_node)
+				new_node.replace_by(new_light_3d)			
+				new_node.free()
+				new_node = new_light_3d
 				# TODO 2021-07-28 fire: unfinished
-			elif key == "spawn-point":
-				new.name = new_node.name
+			elif key == "shadow":
+				new_node.queue_free()
+			elif key == "nav-mesh":
+				new_node.queue_free()
+			elif key == "trimesh":
 				new_node.replace_by(new)
-				new.set_owner(root_node)
+				new_node.free()
+				new_node = new
+			elif key == "spawn-point":
+				new_node.queue_free()
 			elif key == "audio-params":
 				pass
 			elif key == "audio":
 				var new_audio_3d = AudioStreamPlayer3D.new()
 				new_audio_3d.name = new_node.name
 				new_node.replace_by(new_audio_3d)
-				new_audio_3d.set_owner(root_node)
+				new_node.free()
+				new_node = new_audio_3d
 			else:
-				print(key + ": ")
-				print(hubs[key])
+				"%s: %s".format([key, hubs[key]])
 				
 		extended_nodes.push_back(curr["MOZ_hubs_components"])
 	
