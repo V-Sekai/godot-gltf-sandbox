@@ -89,6 +89,7 @@ func _import_scene(path: String, flags: int, bake_fps: int):
 			var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
 			new_light_3d.name = node_3d.name
 			new_light_3d.transform = node_3d.transform
+			new_light_3d.rotate_object_local(Vector3(1.0, 0.0, 0.0), 180)
 			node_3d.replace_by(new_light_3d)
 			# TODO 2021-07-28 fire: unfinished
 			continue
