@@ -88,14 +88,11 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 	var keys : Array = hubs.keys()	
 	if keys.has("visible"):
 		if hubs["visible"]["visible"] == false:
-			node_3d.queue_free()
+			node_3d.visible = false
 			print("[visible] %s" % [false])
 	if keys.has("nav-mesh"):	
 		print("[nav-mesh]")
-		var new_node_3d : Node3D = Node3D.new()
-		new_node_3d.name = node_3d.name
-		new_node_3d.transform = node_3d.transform
-		node_3d.replace_by(new_node_3d)
+		node_3d.queue_free()
 	if keys.has("trimesh"):
 		print("[trimesh]")
 		var new_node_3d : Node3D = Node3D.new()
@@ -127,7 +124,6 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 			print(path_stream)
 			new_audio_3d.stream = load(path_stream)
 		var auto_play : bool = hubs["audio"]["autoPlay"]
-		new_audio_3d.playing = auto_play
 		new_audio_3d.autoplay = auto_play
 		if hubs["audio"].has("volume"):
 			var volume : float = hubs["audio"]["volume"]
