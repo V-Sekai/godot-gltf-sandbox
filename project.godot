@@ -6,7 +6,7 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=4
+config_version=5
 
 _global_script_classes=[{
 "base": "Camera3D",
@@ -24,12 +24,13 @@ config/name="Mozilla Hubs Importer"
 run/main_scene="res://mozilla_hubs_importer/scenes/start.tscn"
 config/icon="res://icon.png"
 enabled=PackedStringArray("vrm")
+config/features=PackedStringArray("4.0")
 
 [display]
 
+window/size/resizable=false
 window/size/width=1920
 window/size/height=1080
-window/size/resizable=false
 window/size/test_width=1280
 window/size/test_height=720
 
@@ -40,8 +41,7 @@ enabled=PackedStringArray("res://addons/interpolated_camera_3d/plugin.cfg", "res
 [importer_defaults]
 
 scene={
-"_subresources": {
-},
+"_subresources": {},
 "animation/bake_reset_animation": true,
 "animation/fps": 15,
 "animation/import": true,
