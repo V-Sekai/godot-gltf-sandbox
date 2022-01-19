@@ -88,7 +88,7 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 	var keys : Array = hubs.keys()	
 	if keys.has("visible"):
 		if hubs["visible"]["visible"] == false:
-			node_3d.queue_free()
+			node_3d.visible = false
 			print("[visible] %s" % [false])
 	if keys.has("nav-mesh"):	
 		print("[nav-mesh]")
