@@ -40,12 +40,16 @@ func _import_scene(path: String, flags: int, options: Dictionary, bake_fps: int)
 		if not json_node.has("extensions"):
 			continue
 		var node_extensions = json_node.get("extensions")
-		var node_3d : Node3D = gstate.get_scene_node(index)
+		var gltf_root = gstate.root_nodes[0]
+		var new_node_path : String = gstate.get_scene_node(gltf_root).get_path_to(gstate.get_scene_node(index))
+		new_node_path = new_node_path.simplify_path()
+		print(new_node_path)
+		var node_3d : Node3D = root_node.get_node(new_node_path)
 		if node_extensions.has("OMI_audio_emitter"):
 			import_omi_audio_emitter(gstate, json, node_3d, path, index, json_nodes, node_extensions)
 		if node_extensions.has("MOZ_hubs_components"):
 			import_moz_hubs(gstate, json, node_3d, path, index, json_nodes, node_extensions)
-		if node_extensions.has("import_material_unlit"):
+		if node_extensions.has("KHR_materials_unlit"):
 			import_material_unlit(gstate, json, node_3d, path, index, json_nodes, node_extensions)
 
 	return root_node
@@ -84,34 +88,36 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 	var keys : Array = hubs.keys()	
 	if keys.has("visible"):
 		if hubs["visible"]["visible"] == false:
-			node_3d.visible = false
+			node_3d.queue_free()
+			print("[visible] %s" % [false])
 	if keys.has("nav-mesh"):	
+		print("[nav-mesh]")
 		var new_node_3d : Node3D = Node3D.new()
 		new_node_3d.name = node_3d.name
 		new_node_3d.transform = node_3d.transform
 		node_3d.replace_by(new_node_3d)
-		return
 	if keys.has("trimesh"):
+		print("[trimesh]")
 		var new_node_3d : Node3D = Node3D.new()
 		new_node_3d.name = node_3d.name
 		new_node_3d.transform = node_3d.transform
 		node_3d.replace_by(new_node_3d)
-		return
-	if keys.has("directional-light"):				
+	if keys.has("directional-light"):
+		print("[directional-light]")	
 		var new_light_3d : DirectionalLight3D = DirectionalLight3D.new()
 		new_light_3d.name = node_3d.name
 		new_light_3d.transform = node_3d.transform
 		new_light_3d.rotate_object_local(Vector3(1.0, 0.0, 0.0), 180)
 		node_3d.replace_by(new_light_3d)
 		# TODO 2021-07-28 fire: unfinished
-		return
-	if keys.has("spawn-point"):		
+	if keys.has("spawn-point"):
+		print("[spawn-point]")
 		var new_node_3d : Node3D = Node3D.new()
 		new_node_3d.name = node_3d.name
 		new_node_3d.transform = node_3d.transform
 		node_3d.replace_by(new_node_3d)
-		return
 	if keys.has("audio"):
+		print("[audio]")
 		var src : String = hubs["audio"]["src"]					
 		var new_audio_3d = AudioStreamPlayer3D.new()
 		new_audio_3d.name = node_3d.name
@@ -127,8 +133,8 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 			var volume : float = hubs["audio"]["volume"]
 			new_audio_3d.unit_db = linear2db(volume)
 		node_3d.replace_by(new_audio_3d)
-		return
 	if keys.has("shadow"):
+		print("[shadow]")
 #			if node_3d is MeshInstance3D:
 #				var cast : bool = hubs["shadow"]["cast"]				
 #				var receive : bool = hubs["shadow"]["receive"]
@@ -140,4 +146,4 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 #					node_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
 #				elif cast == true and receive == true:					
 #					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
-		return
+		pass
