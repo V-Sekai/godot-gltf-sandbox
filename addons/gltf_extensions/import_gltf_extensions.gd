@@ -88,11 +88,14 @@ func import_moz_hubs(gstate : GLTFState, json, node_3d, path, index, json_nodes,
 	var keys : Array = hubs.keys()	
 	if keys.has("visible"):
 		if hubs["visible"]["visible"] == false:
-			node_3d.visible = false
+			node_3d.queue_free()
 			print("[visible] %s" % [false])
 	if keys.has("nav-mesh"):	
 		print("[nav-mesh]")
-		node_3d.queue_free()
+		var new_node_3d : Node3D = Node3D.new()
+		new_node_3d.name = node_3d.name
+		new_node_3d.transform = node_3d.transform
+		node_3d.replace_by(new_node_3d)
 	if keys.has("trimesh"):
 		print("[trimesh]")
 		var new_node_3d : Node3D = Node3D.new()
