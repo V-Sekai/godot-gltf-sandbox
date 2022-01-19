@@ -1,0 +1,16 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://ba853gkm5h4rq"
+path="res://.godot/imported/ambient.mp3-4fb5b0fbbe2ff83e2e539951b6342097.mp3str"
+
+[deps]
+
+source_file="res://omi_audio_emitter/simple/ambient.mp3"
+dest_files=["res://.godot/imported/ambient.mp3-4fb5b0fbbe2ff83e2e539951b6342097.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0

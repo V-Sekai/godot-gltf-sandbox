@@ -1,0 +1,16 @@
+[remap]
+
+importer="bitmap"
+type="BitMap"
+uid="uid://dylbtsjsrl46b"
+path="res://.godot/imported/OutdoorFestival_img3.png-fa7a6fda785dda59188d502d2e5eece5.res"
+
+[deps]
+
+source_file="res://omi_audio_emitter/outdoor-festival/OutdoorFestival_img3.png"
+dest_files=["res://.godot/imported/OutdoorFestival_img3.png-fa7a6fda785dda59188d502d2e5eece5.res"]
+
+[params]
+
+create_from=0
+threshold=0.5
