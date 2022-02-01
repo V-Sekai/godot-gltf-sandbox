@@ -5,7 +5,7 @@ var import_plugin
 
 
 func _enter_tree():
-	import_plugin = preload("res://addons/gltf_extensions/import_gltf_extensions.gd").new()
+	import_plugin = preload("res://addons/gltf_extensions/import_gltf_extensions_all.gd").new()
 	add_scene_format_importer_plugin(import_plugin)
 
 

@@ -38,25 +38,6 @@ window/size/test_height=720
 
 enabled=PackedStringArray("res://addons/gltf_extensions/plugin.cfg", "res://addons/interpolated_camera_3d/plugin.cfg")
 
-[importer_defaults]
-
-scene={
-"_subresources": {},
-"animation/bake_reset_animation": true,
-"animation/fps": 15,
-"animation/import": true,
-"import_script/path": "",
-"meshes/create_shadow_meshes": false,
-"meshes/ensure_tangents": true,
-"meshes/generate_lods": true,
-"meshes/light_baking": 2,
-"meshes/lightmap_texel_size": 0.1,
-"nodes/root_name": "Scene Root",
-"nodes/root_scale": 1.0,
-"nodes/root_type": "Node3D",
-"skins/use_named_skins": true
-}
-
 [input]
 
 view_up={
