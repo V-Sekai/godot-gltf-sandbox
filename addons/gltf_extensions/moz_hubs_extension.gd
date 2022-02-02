@@ -1,8 +1,20 @@
 @tool
 extends GLTFDocumentExtension
 
+func _export_preflight(state) -> int:
+	set_export_setting("enabled", false)
+	if !state.json.has("extensionsUsed"):
+		return OK
+	var extensions_used : Array = state.json["extensionsUsed"]
+	if extensions_used.find("MOZ_hubs_components") == -1:
+		return OK
+	set_export_setting("enabled", true)
+	return OK
 
 func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node3D) -> int:
+	var enabled : bool = get_export_setting("enabled")
+	if not enabled:
+		return OK
 	var path : String = get_export_setting("path")
 	if not json.has("extensions"):
 		return OK

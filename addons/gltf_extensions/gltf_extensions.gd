@@ -6,10 +6,6 @@ func _get_importer_name() -> String:
 	return "glTF2 Extensions"
 
 
-func _get_recognized_extensions() -> Array:
-	return ["glb", "gltf"]
-
-
 func _get_extensions() -> Array:
 	return ["glb", "gltf"]
 
@@ -24,9 +20,9 @@ func _import_animation(path: String, flags: int, options: Dictionary, bake_fps: 
 
 func _import_scene(path: String, flags: int, options: Dictionary, bake_fps: int) -> Node:
 	var gltf : GLTFDocument = GLTFDocument.new()
-#	var audio_extension : GLTFDocumentExtension = load("res://addons/gltf_extensions/omi_audio_emitter.gd").new()
-#	audio_extension.set_import_setting("path", path)
-#	gltf.extensions.push_front(audio_extension)
+	var audio_extension : GLTFDocumentExtension = load("res://addons/gltf_extensions/omi_audio_emitter.gd").new()
+	audio_extension.set_import_setting("path", path)
+	gltf.extensions.push_front(audio_extension)
 	var moz_extension : GLTFDocumentExtension = load("res://addons/gltf_extensions/moz_hubs_extension.gd").new()
 	moz_extension.set_import_setting("path", path)
 	gltf.extensions.push_front(moz_extension)	
