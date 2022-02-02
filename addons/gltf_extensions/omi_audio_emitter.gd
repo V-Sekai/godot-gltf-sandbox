@@ -32,7 +32,6 @@ func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : N
 			var src : int = omi_emitter["audioEmitter"]
 			var new_node : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 			new_node.name = node_3d.name
-			new_node.transform = node_3d.transform
 			var global_extensions : Dictionary = gstate.json["extensions"]
 			if not global_extensions.has("OMI_audio_emitter"):
 				continue
