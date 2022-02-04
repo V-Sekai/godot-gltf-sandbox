@@ -1,16 +1,20 @@
 @tool
 extends GLTFDocumentExtension
 
-func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node3D) -> int:
+func _import_preflight(gstate):
 	var path : String = get_export_setting("path")
 	if !gstate.json.has("extensionsUsed"):
-		return OK
+		return FAILED
 	var extensions_used : Array = gstate.json["extensionsUsed"]
 	if extensions_used.find("MOZ_hubs_components") == -1:
-		return OK
-	if not json.has("extensions"):
-		return OK
+		return FAILED
+	return OK
+
+func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node3D) -> int:
 	var node_extensions = json.get("extensions")
+	if not json.has("extensions"):
+		return FAILED
+	var path : String = get_import_setting("path")
 	if node_extensions.has("MOZ_hubs_components"):
 		import_moz_hubs(gstate, json, node, path, node_extensions)
 	if node_extensions.has("KHR_materials_unlit"):
