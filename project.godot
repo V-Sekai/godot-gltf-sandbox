@@ -36,7 +36,7 @@ window/size/test_height=720
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/interpolated_camera_3d/plugin.cfg", "res://addons/omi_gltf_extension/plugin.cfg")
+enabled=PackedStringArray("res://addons/interpolated_camera_3d/plugin.cfg", "res://addons/moz_hubs_gltf_extension/plugin.cfg")
 
 [importer_defaults]
 
