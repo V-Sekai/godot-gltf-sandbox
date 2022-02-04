@@ -20,9 +20,9 @@ func _import_animation(path: String, flags: int, options: Dictionary, bake_fps: 
 
 func _import_scene(path: String, flags: int, options: Dictionary, bake_fps: int) -> Node:
 	var gltf : GLTFDocument = GLTFDocument.new()
-	var moz_extension : GLTFDocumentExtension = load("res://addons/gltf_extensions/moz_hubs_extension.gd").new()
+	var moz_extension : GLTFDocumentExtension = load("res://addons/moz_hubs_gltf_extension/moz_hubs_extension.gd").new()
 	moz_extension.set_import_setting("path", path)
-	gltf.extensions.push_front(moz_extension)	
+	gltf.extensions.push_front(moz_extension)
 	var state : GLTFState = GLTFState.new()
 	var root_node = gltf.append_from_file(path, state, flags, bake_fps)
 	

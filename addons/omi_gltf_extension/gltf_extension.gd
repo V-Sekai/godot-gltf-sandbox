@@ -20,7 +20,7 @@ func _import_animation(path: String, flags: int, options: Dictionary, bake_fps: 
 
 func _import_scene(path: String, flags: int, options: Dictionary, bake_fps: int) -> Node:
 	var gltf : GLTFDocument = GLTFDocument.new()
-	var moz_extension : GLTFDocumentExtension = load("res://addons/gltf_extensions/moz_hubs_extension.gd").new()
+	var moz_extension : GLTFDocumentExtension = load("res://addons/omi_gltf_extension/omi_audio_emitter.gd").new()
 	moz_extension.set_import_setting("path", path)
 	gltf.extensions.push_front(moz_extension)	
 	var state : GLTFState = GLTFState.new()

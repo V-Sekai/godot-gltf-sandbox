@@ -5,7 +5,7 @@ var import_plugin
 
 
 func _enter_tree():
-	import_plugin = preload("./gltf_extension.gd").new()
+	import_plugin = preload("res://addons/moz_hubs_gltf_extension/gltf_extension.gd").new()
 	add_scene_format_importer_plugin(import_plugin)
 
 
