@@ -2,7 +2,6 @@
 extends GLTFDocumentExtension
 
 func _import_preflight(gstate):
-	var path : String = get_export_setting("path")
 	if !gstate.json.has("extensionsUsed"):
 		return FAILED
 	var extensions_used : Array = gstate.json["extensionsUsed"]
@@ -61,7 +60,6 @@ func import_moz_hubs(gstate : GLTFState, json : Dictionary, node_3d : Node3D, pa
 			new_node.name = node_3d.name
 			new_node.transform = node_3d.transform			
 			if not src.is_empty():
-				var path : String = get_import_setting("path")
 				var path_stream = path.get_base_dir() + "/" + src.get_file()
 				print(path_stream)
 				new_node.stream = load(path_stream)

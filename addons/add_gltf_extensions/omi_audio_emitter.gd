@@ -8,7 +8,7 @@ func _import_preflight(state):
 	if not extensions_used.has("OMI_audio_emitter"):
 		return OK
 	print("Using %s GLTF2 extension." % ["OMI_audio_emitter"])
-	set_import_setting("enabled", true)
+	add_import_setting("enabled", true)
 	return OK
 
 
