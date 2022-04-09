@@ -62,7 +62,6 @@ func import_moz_hubs(options: Dictionary, gstate : GLTFState, json : Dictionary,
 				print(path_stream)
 				new_node.stream = load(path_stream)
 			var auto_play : bool = hubs[AUDIO]["autoPlay"]
-			new_node.playing = auto_play
 			new_node.autoplay = auto_play
 			if hubs[AUDIO].has("volume"):
 				var volume : float = hubs[AUDIO]["volume"]
@@ -80,6 +79,11 @@ func import_moz_hubs(options: Dictionary, gstate : GLTFState, json : Dictionary,
 	#				elif cast == true and receive == true:
 	#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
 			pass
+		elif key_i == "scene-preview-camera":
+			new_node = Camera3D.new()
+			new_node.name = node_3d.name
+			new_node.transform = node_3d.transform
+			new_node.current = true
 		else:
 			print("Not implemented.")
 	if new_node:

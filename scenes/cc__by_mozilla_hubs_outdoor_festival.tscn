@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://21mosi21f07p"]
+
+[ext_resource type="PackedScene" uid="uid://b3ueyq7vthksv" path="res://mozilla_hubs_importer/art/festival/CC-BY Mozilla Hubs Outdoor Festival.glb" id="1_rwyql"]
+
+[node name="CC-BY Mozilla Hubs Outdoor Festival" instance=ExtResource( "1_rwyql" )]
