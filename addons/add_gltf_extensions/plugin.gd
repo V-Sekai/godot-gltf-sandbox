@@ -1,13 +1,16 @@
 @tool
 extends EditorPlugin
 
-var import_plugin : EditorScenePostImportPlugin = null
+var scene_import = null
 
 func _enter_tree():
-	import_plugin = preload("res://addons/add_gltf_extensions/add_gltf_extensions.gd").new()
-	add_scene_post_import_plugin(import_plugin)
-
+	scene_import = EditorSceneFormatImporterGLTF.new()	
+	var omi_ext : GLTFDocumentExtension = load("res://addons/add_gltf_extensions/omi_audio_emitter.gd").new()
+	scene_import.gltf_extensions.push_back(omi_ext)
+	var hubs_ext : GLTFDocumentExtension = load("res://addons/add_gltf_extensions/moz_hubs_extension.gd").new()
+	scene_import.gltf_extensions.push_back(hubs_ext)
+	add_scene_format_importer_plugin(scene_import, true)
 
 func _exit_tree():
-	add_scene_post_import_plugin(import_plugin)
-	import_plugin = null
+	remove_scene_format_importer_plugin(scene_import)
+	scene_import = null

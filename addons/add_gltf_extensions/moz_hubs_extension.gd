@@ -1,37 +1,35 @@
 @tool
 extends GLTFDocumentExtension
 
-func _import_preflight(gstate):
+func _import_node(options: Dictionary, gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
 	if !gstate.json.has("extensionsUsed"):
-		return FAILED
+		return OK
 	var extensions_used : Array = gstate.json["extensionsUsed"]
 	if not extensions_used.has("MOZ_hubs_components"):
-		return FAILED
-	return OK
-
-func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node3D) -> int:
+		return OK
 	var node_extensions = json.get("extensions")
 	if not json.has("extensions"):
-		return FAILED
-	var path : String = get_import_setting("path")
+		return OK
+	if gstate.base_path.is_empty():
+		return OK
 	if node_extensions.has("MOZ_hubs_components"):
-		import_moz_hubs(gstate, json, node, path, node_extensions)
+		import_moz_hubs(options, gstate, json, node, node_extensions)
 	if node_extensions.has("KHR_materials_unlit"):
-		import_material_unlit(gstate, json, node, path, node_extensions)
+		import_material_unlit(options, gstate, json, node, node_extensions)
 	return OK
 
 
-func import_material_unlit(gstate : GLTFState, json : Dictionary, node_3d : Node3D, path : String, extensions : Dictionary) -> void:	
+func import_material_unlit(options: Dictionary, gstate : GLTFState, json : Dictionary, node_3d : Node3D, extensions : Dictionary) -> void:
 	var mesh_node : MeshInstance3D = node_3d
 	for surface_i in mesh_node.get_mesh().get_surface_count():
 		var mat : BaseMaterial3D = node_3d.get_mesh().surface_get_material(surface_i)
 		if mat:
-			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED		
+			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 
 
-func import_moz_hubs(gstate : GLTFState, json : Dictionary, node_3d : Node3D, path : String, extensions : Dictionary) -> void:	
+func import_moz_hubs(options: Dictionary, gstate : GLTFState, json : Dictionary, node_3d : Node3D, extensions : Dictionary) -> void:
 	var hubs = extensions["MOZ_hubs_components"]
-	var keys : Array = hubs.keys()	
+	var keys : Array = hubs.keys()
 	var AUDIO = "audio"
 	var new_node : Node = null
 	var old_node : Node = node_3d
@@ -55,30 +53,31 @@ func import_moz_hubs(gstate : GLTFState, json : Dictionary, node_3d : Node3D, pa
 		elif key_i == "spawn-point":
 			pass
 		elif key_i == AUDIO:
-			var src : String = hubs[AUDIO]["src"]					
+			var src : String = hubs[AUDIO]["src"]
 			new_node = AudioStreamPlayer3D.new()
 			new_node.name = node_3d.name
-			new_node.transform = node_3d.transform			
+			new_node.transform = node_3d.transform
 			if not src.is_empty():
-				var path_stream = path.get_base_dir() + "/" + src.get_file()
+				var path_stream = gstate.base_path + "/" + src.get_file()
 				print(path_stream)
 				new_node.stream = load(path_stream)
 			var auto_play : bool = hubs[AUDIO]["autoPlay"]
+			new_node.playing = auto_play
 			new_node.autoplay = auto_play
 			if hubs[AUDIO].has("volume"):
 				var volume : float = hubs[AUDIO]["volume"]
 				new_node.unit_db = linear2db(volume)
 		elif key_i == "shadow":
 	#			if node_3d is MeshInstance3D:
-	#				var cast : bool = hubs["shadow"]["cast"]				
+	#				var cast : bool = hubs["shadow"]["cast"]
 	#				var receive : bool = hubs["shadow"]["receive"]
 	#				if cast == false and receive == false:
 	#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
-	#				elif cast == true and receive == false:					
+	#				elif cast == true and receive == false:
 	#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_OFF
-	#				elif cast == false and receive == true:					
+	#				elif cast == false and receive == true:
 	#					node_3d.cast_shadow =  MeshInstance3D.SHADOW_CASTING_SETTING_SHADOWS_ONLY
-	#				elif cast == true and receive == true:					
+	#				elif cast == true and receive == true:
 	#					node_3d.cast_shadow = MeshInstance3D.SHADOW_CASTING_SETTING_ON
 			pass
 		else:

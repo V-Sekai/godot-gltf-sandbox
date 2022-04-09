@@ -1,19 +1,19 @@
 @tool
 extends GLTFDocumentExtension
 
-func _import_preflight(state):
+func _import_preflight(options: Dictionary, state: GLTFState):
 	if not state.json.has("extensionsUsed"):
 		return OK
 	var extensions_used : Array = state.json["extensionsUsed"]
 	if not extensions_used.has("OMI_audio_emitter"):
 		return OK
 	print("Using %s GLTF2 extension." % ["OMI_audio_emitter"])
-	add_import_setting("enabled", true)
+	options["enabled"] = true
 	return OK
 
 
-func _import_post_parse(state : GLTFState):
-	if not get_import_setting("enabled"):
+func _import_post_parse(options: Dictionary, state : GLTFState):
+	if not options.has("enabled") or options["enabled"] == true:
 		return OK
 	var extensions : Dictionary = state.json["extensions"]
 	var emitter_json : Dictionary = extensions["OMI_audio_emitter"]
@@ -34,17 +34,16 @@ func _import_post_parse(state : GLTFState):
 		var src = emitter["source"]
 		var audio_sources : Array = emitter_json["audioSources"]
 		var audio_source : Dictionary = audio_sources[src]
-		create_global_emitter(node, audio_source, emitter)
+		create_global_emitter(node.owner.scene_file_path, node, audio_source, emitter)
 	return OK
 
-func create_global_emitter(root_node : Node, audio_source : Dictionary, emitter : Dictionary) -> void:
+func create_global_emitter(path: String, root_node : Node, audio_source : Dictionary, emitter : Dictionary) -> void:
 	var new_node : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	if emitter.has("name"):
 		new_node.name = emitter["name"]
 	if emitter.has("autoPlay"):
 		new_node.autoplay = emitter["autoPlay"]
 	var uri = audio_source["uri"]
-	var path : String = get_import_setting("path")
 	var path_stream = path.get_base_dir() + "/" + uri.get_file()
 	var stream : AudioStreamMP3 = ResourceLoader.load(path_stream, "AudioStreamMP3", 1)
 	if emitter.has("loop"):
@@ -56,7 +55,7 @@ func create_global_emitter(root_node : Node, audio_source : Dictionary, emitter 
 	new_node.owner = root_node.owner
 	print("[audioEmitter global]")
 
-func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node3D) -> int:
+func _import_node(options: Dictionary, gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
 	if not json.has("extensions"):
 		return OK
 	var node_extensions : Dictionary = json["extensions"]
@@ -64,11 +63,11 @@ func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, n
 		return OK
 	var extensions : Dictionary = gstate.json["extensions"]
 	var emitter_json : Dictionary = extensions["OMI_audio_emitter"]
-	import_omi_audio_emitter(gstate, json, node, emitter_json)
+	import_omi_audio_emitter(options, gstate, json, node, emitter_json)
 	return OK
 
 
-func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : Node3D, extension_document : Dictionary) -> void:
+func import_omi_audio_emitter(options: Dictionary, gstate : GLTFState, json : Dictionary, node_3d : Node3D, extension_document : Dictionary) -> void:
 	if not json.has("extensions"):
 		return
 	var extensions = json["extensions"]
@@ -88,8 +87,7 @@ func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : N
 				new_node.name = audio_emitter["name"]
 			if audio_emitter.has("autoPlay"):
 				new_node.autoplay = audio_emitter["autoPlay"]
-			var path : String = get_import_setting("path")
-			var path_stream = path.get_base_dir() + "/" + uri.get_file()
+			var path_stream = gstate.base_path + "/" + uri.get_file()
 			var stream : AudioStreamMP3 = ResourceLoader.load(path_stream, "AudioStreamMP3", 1)
 			if audio_emitter.has("loop"):
 				stream.loop = audio_emitter["loop"]
