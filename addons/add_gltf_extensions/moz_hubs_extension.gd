@@ -1,12 +1,21 @@
 @tool
 extends GLTFDocumentExtension
 
-func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
-	if !gstate.json.has("extensionsUsed"):
+var enabled = false
+
+func _import_preflight(state: GLTFState) -> int:
+	if !state.json.has("extensionsUsed"):
 		return OK
-	var extensions_used : Array = gstate.json["extensionsUsed"]
+	var extensions_used : Array = state.json["extensionsUsed"]
 	if not extensions_used.has("MOZ_hubs_components"):
 		return OK
+	enabled = true
+	return OK
+
+func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
+	if not enabled: 
+		return OK
+
 	var node_extensions = json.get("extensions")
 	if not json.has("extensions"):
 		return OK

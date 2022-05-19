@@ -1,8 +1,8 @@
 @tool
 extends GLTFDocumentExtension
 
-
 var enabled : bool = false
+
 
 func _import_preflight(state: GLTFState) -> int:
 	if not state.json.has("extensionsUsed"):
@@ -37,17 +37,19 @@ func _import_post_parse(state : GLTFState) -> int:
 		var src = emitter["source"]
 		var audio_sources : Array = emitter_json["audioSources"]
 		var audio_source : Dictionary = audio_sources[src]
-		create_global_emitter(node.owner.scene_file_path, node, audio_source, emitter)
+		if state == null:
+			continue
+		create_global_emitter(state.get_base_path(), node, audio_source, emitter)
 	return OK
 
-func create_global_emitter(path: String, root_node : Node, audio_source : Dictionary, emitter : Dictionary) -> void:
+func create_global_emitter(base_path: String, root_node : Node, audio_source : Dictionary, emitter : Dictionary) -> void:
 	var new_node : AudioStreamPlayer3D = AudioStreamPlayer3D.new()
 	if emitter.has("name"):
 		new_node.name = emitter["name"]
 	if emitter.has("autoPlay"):
 		new_node.autoplay = emitter["autoPlay"]
 	var uri = audio_source["uri"]
-	var path_stream = path.get_base_dir() + "/" + uri.get_file()
+	var path_stream = base_path + "/" + uri.get_file()
 	var stream : AudioStreamMP3 = ResourceLoader.load(path_stream, "AudioStreamMP3", 1)
 	if emitter.has("loop"):
 		stream.loop = emitter["loop"]
