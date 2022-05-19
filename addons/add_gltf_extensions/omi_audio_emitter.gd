@@ -1,19 +1,22 @@
 @tool
 extends GLTFDocumentExtension
 
-func _import_preflight(options: Dictionary, state: GLTFState):
+
+var enabled : bool = false
+
+func _import_preflight(state: GLTFState) -> int:
 	if not state.json.has("extensionsUsed"):
 		return OK
 	var extensions_used : Array = state.json["extensionsUsed"]
 	if not extensions_used.has("OMI_audio_emitter"):
 		return OK
 	print("Using %s GLTF2 extension." % ["OMI_audio_emitter"])
-	options["enabled"] = true
+	enabled = true
 	return OK
 
 
-func _import_post_parse(options: Dictionary, state : GLTFState):
-	if not options.has("enabled") or options["enabled"] == true:
+func _import_post_parse(state : GLTFState) -> int:
+	if enabled != true:
 		return OK
 	var extensions : Dictionary = state.json["extensions"]
 	var emitter_json : Dictionary = extensions["OMI_audio_emitter"]
@@ -55,7 +58,7 @@ func create_global_emitter(path: String, root_node : Node, audio_source : Dictio
 	new_node.owner = root_node.owner
 	print("[audioEmitter global]")
 
-func _import_node(options: Dictionary, gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
+func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
 	if not json.has("extensions"):
 		return OK
 	var node_extensions : Dictionary = json["extensions"]
@@ -63,11 +66,11 @@ func _import_node(options: Dictionary, gstate : GLTFState, gltf_node : GLTFNode,
 		return OK
 	var extensions : Dictionary = gstate.json["extensions"]
 	var emitter_json : Dictionary = extensions["OMI_audio_emitter"]
-	import_omi_audio_emitter(options, gstate, json, node, emitter_json)
+	import_omi_audio_emitter(gstate, json, node, emitter_json)
 	return OK
 
 
-func import_omi_audio_emitter(options: Dictionary, gstate : GLTFState, json : Dictionary, node_3d : Node3D, extension_document : Dictionary) -> void:
+func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : Node3D, extension_document : Dictionary) -> void:
 	if not json.has("extensions"):
 		return
 	var extensions = json["extensions"]

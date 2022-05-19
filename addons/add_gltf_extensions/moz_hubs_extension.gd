@@ -1,7 +1,7 @@
 @tool
 extends GLTFDocumentExtension
 
-func _import_node(options: Dictionary, gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
+func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
 	if !gstate.json.has("extensionsUsed"):
 		return OK
 	var extensions_used : Array = gstate.json["extensionsUsed"]
@@ -13,13 +13,13 @@ func _import_node(options: Dictionary, gstate : GLTFState, gltf_node : GLTFNode,
 	if gstate.base_path.is_empty():
 		return OK
 	if node_extensions.has("MOZ_hubs_components"):
-		import_moz_hubs(options, gstate, json, node, node_extensions)
+		import_moz_hubs(gstate, json, node, node_extensions)
 	if node_extensions.has("KHR_materials_unlit"):
-		import_material_unlit(options, gstate, json, node, node_extensions)
+		import_material_unlit(gstate, json, node, node_extensions)
 	return OK
 
 
-func import_material_unlit(options: Dictionary, gstate : GLTFState, json : Dictionary, node_3d : Node3D, extensions : Dictionary) -> void:
+func import_material_unlit(gstate : GLTFState, json : Dictionary, node_3d : Node3D, extensions : Dictionary) -> void:
 	var mesh_node : MeshInstance3D = node_3d
 	for surface_i in mesh_node.get_mesh().get_surface_count():
 		var mat : BaseMaterial3D = node_3d.get_mesh().surface_get_material(surface_i)
@@ -27,7 +27,7 @@ func import_material_unlit(options: Dictionary, gstate : GLTFState, json : Dicti
 			mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 
 
-func import_moz_hubs(options: Dictionary, gstate : GLTFState, json : Dictionary, node_3d : Node3D, extensions : Dictionary) -> void:
+func import_moz_hubs(gstate : GLTFState, json : Dictionary, node_3d : Node3D, extensions : Dictionary) -> void:
 	var hubs = extensions["MOZ_hubs_components"]
 	var keys : Array = hubs.keys()
 	var AUDIO = "audio"
