@@ -1,0 +1,16 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dq4dq0cpl6kja"
+path="res://.godot/imported/OutdoorFestival_audio3.mp3-61cc697057e7df33e5256ad9d0c9cfc6.mp3str"
+
+[deps]
+
+source_file="res://omi_audio_emitter/outdoor-festival/OutdoorFestival_audio3.mp3"
+dest_files=["res://.godot/imported/OutdoorFestival_audio3.mp3-61cc697057e7df33e5256ad9d0c9cfc6.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -61,6 +61,8 @@ func create_global_emitter(base_path: String, root_node : Node, audio_source : D
 	print("[audioEmitter global]")
 
 func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
+	if enabled != true:
+		return OK
 	if not json.has("extensions"):
 		return OK
 	var node_extensions : Dictionary = json["extensions"]
@@ -90,8 +92,8 @@ func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : N
 			var uri = audio_emitter["uri"]
 			if audio_emitter.has("name"):
 				new_node.name = audio_emitter["name"]
-			if audio_emitter.has("autoPlay"):
-				new_node.autoplay = audio_emitter["autoPlay"]
+			if audio_emitter.has("playing"):
+				new_node.autoplay = audio_emitter["playing"]
 			var path_stream = gstate.base_path + "/" + uri.get_file()
 			var stream : AudioStreamMP3 = ResourceLoader.load(path_stream, "AudioStreamMP3", 1)
 			if audio_emitter.has("loop"):
@@ -99,6 +101,8 @@ func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : N
 			new_node.stream = stream
 			if audio_emitter.has("maxDistance"):
 				new_node.max_distance = audio_emitter["maxDistance"]
+			if audio_emitter.has("gain"):
+				new_node.unit_db = linear2db(audio_emitter["gain"])
 			#audio_emitter["coneInnerAngle"]
 			#audio_emitter["coneOuterAngle"]
 			#audio_emitter["coneOuterGain"]
