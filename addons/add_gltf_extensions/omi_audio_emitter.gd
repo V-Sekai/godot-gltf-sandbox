@@ -3,8 +3,36 @@ extends GLTFDocumentExtension
 
 var enabled : bool = false
 
+func _export_post(state: GLTFState) -> int:
+	print("Exporting %s GLTF2 extension." % ["OMI_audio_emitter"])
+	state.json["extensionsUsed"].push_back("OMI_audio_emitter")
+	return OK
+	
+func _export_node(state: GLTFState, gltf_node: GLTFNode, json: Dictionary, node: Node):
+	if not node is AudioStreamPlayer3D:
+		return OK
+	if not json.has("extensions") or not json["extensions"].has("OMI_audio_emitter"):
+		json["extensions"] = Array()
+		json["extensions"].push_back("OMI_audio_emitter")
+#	var omi_emitter : Dictionary
+#	var src : int = omi_emitter["audioEmitter"]
+#	var sources = omi_emitter["audioSources"]
+#	var audio_emitter : Dictionary = sources[src]
+#	ResourceSaver.save(stream.name, stream, )
+#	audio_emitter["uri"] = "./" + uri.get_file()
+#	var stream : AudioStreamMP3 = ResourceLoader.load(path_stream, "AudioStreamMP3", 1)
+#	audio_emitter["name"] = node.name
+#	audio_emitter["playing"] = node.autoplay
+#	if node.stream:
+#		audio_emitter["loop"] = node.stream.loop
+#	audio_emitter["maxDistance"] = node.max_distance
+#	audio_emitter["gain"] = db2linear(node.unit_db)
+#	json["extensions"]["OMI_audio_emitter"] = omi_emitter
+	return OK
 
 func _import_preflight(state: GLTFState) -> int:
+	if not state.json.has("extensions"):
+		return OK
 	if not state.json.has("extensionsUsed"):
 		return OK
 	var extensions_used : Array = state.json["extensionsUsed"]
