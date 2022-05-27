@@ -21,7 +21,6 @@ _global_script_class_icons={
 [application]
 
 config/name="glTF Extensions Importer"
-run/main_scene="res://mozilla_hubs_importer/scenes/start.tscn"
 config/icon="res://icon.png"
 enabled=PackedStringArray("vrm")
 config/features=PackedStringArray("4.0")
