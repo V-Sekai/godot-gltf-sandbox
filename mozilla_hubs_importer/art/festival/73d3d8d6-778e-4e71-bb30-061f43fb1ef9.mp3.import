@@ -14,3 +14,6 @@ dest_files=["res://.godot/imported/73d3d8d6-778e-4e71-bb30-061f43fb1ef9.mp3-5a65
 
 loop=true
 loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

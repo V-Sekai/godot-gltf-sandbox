@@ -9,21 +9,33 @@
 config_version=5
 
 _global_script_classes=[{
+"base": "GLTFDocumentExtension",
+"class": &"GLTFDocumentExtensionHubs",
+"language": &"GDScript",
+"path": "res://addons/add_gltf_extensions/moz_hubs_extension.gd"
+}, {
+"base": "GLTFDocumentExtension",
+"class": &"GLTFDocumentExtensionOMIAudioEmitter",
+"language": &"GDScript",
+"path": "res://addons/add_gltf_extensions/omi_audio_emitter.gd"
+}, {
 "base": "Camera3D",
 "class": &"InterpolatedCamera3D",
 "language": &"GDScript",
 "path": "res://addons/interpolated_camera_3d/interpolated_camera_3d.gd"
 }]
 _global_script_class_icons={
+"GLTFDocumentExtensionHubs": "",
+"GLTFDocumentExtensionOMIAudioEmitter": "",
 "InterpolatedCamera3D": "res://addons/interpolated_camera_3d/interpolated_camera_3d.svg"
 }
 
 [application]
 
 config/name="glTF Extensions Importer"
+config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
 enabled=PackedStringArray("vrm")
-config/features=PackedStringArray("4.0")
 
 [display]
 

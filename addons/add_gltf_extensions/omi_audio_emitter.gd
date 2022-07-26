@@ -1,5 +1,6 @@
 @tool
 extends GLTFDocumentExtension
+class_name GLTFDocumentExtensionOMIAudioEmitter
 
 var enabled : bool = false
 
