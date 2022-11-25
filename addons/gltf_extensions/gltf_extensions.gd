@@ -3,6 +3,7 @@ extends EditorSceneFormatImporter
 
 var moz_hubs : GLTFDocumentExtension = preload("res://addons/gltf_extensions/moz_hubs_extension.gd").new()
 var omi_audio : GLTFDocumentExtension = preload("res://addons/gltf_extensions/omi_audio_emitter.gd").new()
+var count_faces : GLTFDocumentExtension = preload("res://addons/gltf_extensions/count_mesh_faces.gd").new()
 
 func _get_importer_name() -> String:
 	return "GLTF Extensions"
@@ -21,6 +22,7 @@ func _import_scene(path: String, flags: int, options: Dictionary, bake_fps: int)
 	var gltf : GLTFDocument = GLTFDocument.new()
 	gltf.register_gltf_document_extension(moz_hubs)
 	gltf.register_gltf_document_extension(omi_audio)
+	gltf.register_gltf_document_extension(count_faces)
 	var state : GLTFState = GLTFState.new()
 	var err = gltf.append_from_file(path, state, flags, bake_fps)
 	if err != OK:
