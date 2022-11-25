@@ -27,8 +27,8 @@ var _camera_light: OmniLight3D
 
 
 # Define for Movement
-const FLOOR_ANGLE_ON_FLOOR = deg2rad(45)
-const FLOOR_ANGLE_WHEN_JUMP = deg2rad(5)
+const FLOOR_ANGLE_ON_FLOOR = deg_to_rad(45)
+const FLOOR_ANGLE_WHEN_JUMP = deg_to_rad(5)
 const GRAVITY: float = 30.0 # Gravitational Acceleration
 const DIRECTION_INTERPOLATE_SPEED: float = 1.0
 const MOTION_INTERPOLATE_SPEED: float = 20.0 # Movement Speed
@@ -119,7 +119,7 @@ func _rotate_camera(move) -> void:
 	_camera_base.rotate_y(-move.x)
 	_camera_base.orthonormalize()
 	_state_camera_x_rot += move.y
-	_state_camera_x_rot = clamp(_state_camera_x_rot, deg2rad(CAMERA_X_ROT_MIN), deg2rad(CAMERA_X_ROT_MAX))
+	_state_camera_x_rot = clamp(_state_camera_x_rot, deg_to_rad(CAMERA_X_ROT_MIN), deg_to_rad(CAMERA_X_ROT_MAX))
 	_camera_base2.rotation.x = _state_camera_x_rot
 	return
 

@@ -15,6 +15,7 @@ dest_files=["res://.godot/imported/CC-BY Mozilla Hubs Outdoor Festival.glb-415b8
 
 nodes/root_type="Node3D"
 nodes/root_name="Scene Root"
+nodes/apply_root_scale=true
 nodes/root_scale=1.0
 meshes/ensure_tangents=true
 meshes/generate_lods=true
@@ -26,6 +27,3 @@ animation/import=true
 animation/fps=30
 import_script/path=""
 _subresources={}
-import_script/extensions=[Object(GLTFDocumentExtensionConvertImporterMesh,"resource_local_to_scene":false,"resource_name":"","script":null)
-, Object(GLTFDocumentExtension,"resource_local_to_scene":false,"resource_name":"","script":Resource("res://addons/add_gltf_extensions/moz_hubs_extension.gd"))
-]

@@ -1,7 +1,5 @@
 @tool
 extends GLTFDocumentExtension
-class_name GLTFDocumentExtensionHubs
-
 
 func _import_node(gstate : GLTFState, gltf_node : GLTFNode, json : Dictionary, node : Node) -> int:
 	var node_extensions = json.get("extensions")
@@ -62,7 +60,7 @@ func import_moz_hubs(gstate : GLTFState, json : Dictionary, node_3d : Node3D, ex
 			new_node.autoplay = auto_play
 			if hubs[AUDIO].has("volume"):
 				var volume : float = hubs[AUDIO]["volume"]
-				new_node.unit_db = linear2db(volume)
+				new_node.unit_db = linear_to_db(volume)
 		elif key_i == "shadow":
 	#			if node_3d is MeshInstance3D:
 	#				var cast : bool = hubs["shadow"]["cast"]

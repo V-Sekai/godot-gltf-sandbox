@@ -1,6 +1,5 @@
 @tool
 extends GLTFDocumentExtension
-class_name GLTFDocumentExtensionOMIAudioEmitter
 
 var enabled : bool = false
 
@@ -31,7 +30,7 @@ func _export_node(state: GLTFState, gltf_node: GLTFNode, json: Dictionary, node:
 #	json["extensions"]["OMI_audio_emitter"] = omi_emitter
 	return OK
 
-func _import_preflight(state: GLTFState) -> int:
+func _import_preflight(state: GLTFState, extensions: PackedStringArray) -> int:
 	if not state.json.has("extensions"):
 		return OK
 	if not state.json.has("extensionsUsed"):
@@ -131,7 +130,7 @@ func import_omi_audio_emitter(gstate : GLTFState, json : Dictionary, node_3d : N
 			if audio_emitter.has("maxDistance"):
 				new_node.max_distance = audio_emitter["maxDistance"]
 			if audio_emitter.has("gain"):
-				new_node.unit_db = linear2db(audio_emitter["gain"])
+				new_node.unit_db = linear_to_db(audio_emitter["gain"])
 			#audio_emitter["coneInnerAngle"]
 			#audio_emitter["coneOuterAngle"]
 			#audio_emitter["coneOuterGain"]
